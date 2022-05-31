@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23838514ad5583341beeb65e58e3bc5a, type: 3}
+  m_Name: LevelConfig
+  m_EditorClassIdentifier: 
+  LevelWaves:
+  - WaveType: 0
+    Asteroids:
+    - SpawnPoint: {x: -13.3, y: 15.38, z: 0}
+      MoveDirection: {x: 1, y: -1, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: 0.02, y: 15.38, z: 0}
+      MoveDirection: {x: 1, y: -1, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: 17.36, y: 15.38, z: 0}
+      MoveDirection: {x: -1, y: -1, z: 0}
+      AsteroidType: 3

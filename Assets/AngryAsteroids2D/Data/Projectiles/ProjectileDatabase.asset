@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59bc9ddb9a430db4c87253e6959eba6e, type: 3}
+  m_Name: ProjectileDatabase
+  m_EditorClassIdentifier: 
+  Data:
+  - ProjectileType: 1
+    Prefab: {fileID: 8170016411895198403, guid: 323a068d993145347a7797a2e6757064, type: 3}
+    PhysicsConfig: {fileID: 11400000, guid: 2e445dc9400946c44ad805389ebe06dc, type: 2}
+    ContactFilter2D:
+      useTriggers: 1
+      useLayerMask: 1
+      useDepth: 0
+      useOutsideDepth: 0
+      useNormalAngle: 0
+      useOutsideNormalAngle: 0
+      layerMask:
+        serializedVersion: 2
+        m_Bits: 64
+      minDepth: 0
+      maxDepth: 0
+      minNormalAngle: 0
+      maxNormalAngle: 0
+    ProjectileSpeed: 10
