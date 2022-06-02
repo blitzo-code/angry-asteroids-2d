@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using AngryAsteroids2D.Source.Core;
@@ -19,11 +20,12 @@ namespace AngryAsteroids2D.Source.Gameplay.Projectile
             _projectiles = new List<Projectile>();
         }
 
-        public Projectile CreateProjectile(ProjectileType projectileType, Vector3 position, Quaternion rotation)
+        public Projectile CreateProjectile(ProjectileType projectileType, Vector3 position, Quaternion rotation, ContactFilter2D filter2D, Action<Collider2D,Collider2D> onProjectileHitCallback)
         {
-            var projectile = _projectileFactory.SpawnProjectile(projectileType, position, rotation);
+            var projectile = _projectileFactory.SpawnProjectile(projectileType, position, rotation, filter2D);
+            projectile.OnCollision = onProjectileHitCallback;
+            
             InitializeProjectile(projectile);
-
             return projectile;
         }
 
@@ -51,8 +53,6 @@ namespace AngryAsteroids2D.Source.Gameplay.Projectile
         void InitializeProjectile(Projectile projectile)
         {
             _projectiles.Add(projectile);
-            
-            SetCollisionAction(projectile);
             ConnectProjectileSystems(projectile);
         }
 
@@ -77,6 +77,8 @@ namespace AngryAsteroids2D.Source.Gameplay.Projectile
             
             var screenLimitWatchEntity = new ScreenLimitWatchEntity(projectile.GameObject.transform, DestroyProjectile);
             GameManager.GetInstance().GameSystems.ScreenLimitDestroySystem.AddEntity(entityId, screenLimitWatchEntity);
+            
+            projectile.GameObject.SetActive(true);
         }
 
         void DisposeAsteroidSystems(Projectile projectile)
@@ -88,23 +90,5 @@ namespace AngryAsteroids2D.Source.Gameplay.Projectile
             GameManager.GetInstance().GameSystems.PhysicsSystem.RemoveEntity(projectileId);
         }
         
-        void SetCollisionAction(Projectile projectile)
-        {
-            switch (projectile.Type)
-            {
-                case ProjectileType.MissileProjectile:
-                    projectile.OnCollision = OnRegularMissileCollidedWithAsteroid;
-                    break;
-                default:
-                    LogUtils.LogCouldNotCreateTypeError(projectile.Type.ToString());
-                    break;
-            }
-        }
-
-        void OnRegularMissileCollidedWithAsteroid(Collider2D self, Collider2D collidedObject)
-        {
-            DestroyProjectile(self.gameObject.GetInstanceID());
-            GameManager.GetInstance().GameManagers.AsteroidManager.DestroyAsteroid(collidedObject.gameObject.GetInstanceID());
-        }
     }
 }

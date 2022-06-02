@@ -37,6 +37,11 @@ namespace AngryAsteroids2D.Source.Physics
 
         void RunCollisionCheck(CollisionListenerEntity entityData)
         {
+            if (!entityData.Collider.gameObject.activeSelf)
+            {
+                return;
+            }
+            
             var hits = entityData.Collider.OverlapCollider(entityData.ContactFilter2D, _collisionBuffer);
             if (hits > 0)
             {

@@ -46,6 +46,7 @@ namespace AngryAsteroids2D.Source.Gameplay.Asteroid
         public Asteroid SpawnAsteroid(AsteroidType asteroidType, Vector3 position)
         {
             var asteroidData = _asteroidsData[asteroidType];
+            
             var gameObject = _asteroidPool.GetOrCreate(asteroidType, asteroidData.Prefab);
             gameObject.transform.position = position;
 

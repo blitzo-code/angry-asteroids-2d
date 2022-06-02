@@ -1,9 +1,5 @@
-using System.Collections.Generic;
-using System.Numerics;
 using AngryAsteroids2D.Source.Core;
 using AngryAsteroids2D.Source.Physics;
-using AngryAsteroids2D.Source.Utils;
-using UnityEditor;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -14,35 +10,24 @@ namespace AngryAsteroids2D.Source.Gameplay.Level
     {
         public readonly Transform Transform;
         public readonly PhysicsBody Body;
-        public readonly Collider2D Collider;
         public bool IsLocked;
 
-        public ScreenBorderEntityData(Transform transform, PhysicsBody body, Collider2D collider, bool startLocked = false)
+        public ScreenBorderEntityData(Transform transform, PhysicsBody body, bool startLocked = false)
         {
             Transform = transform;
             Body = body;
-            Collider = collider;
             IsLocked = startLocked;
         }
     }
     
     public class ScreenBorderPortalSystem : GameSystem<ScreenBorderEntityData>
     {
-        static Vector2[] CORNERS =
-        {
-            Vector2.zero,
-            Vector2.right,
-            Vector2.up,
-            Vector2.one
-        };
-        
         readonly Camera _camera;
-        readonly Vector2 _screenCenterWorldPosition;
-        
-        public ScreenBorderPortalSystem(Camera camera, int maxEntities) : base(maxEntities)
+        readonly Collider2D _safeZone;
+        public ScreenBorderPortalSystem(Camera camera, Collider2D safeZone, int maxEntities) : base(maxEntities)
         {
             _camera = camera;
-            _screenCenterWorldPosition = camera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f));
+            _safeZone = safeZone;
         }
  
         public override void Tick()
@@ -60,18 +45,44 @@ namespace AngryAsteroids2D.Source.Gameplay.Level
                     Debug.DrawLine(Vector3.zero, entityData.Transform.position);   
                 }
                 
-                var pos = entityData.Transform.position;
-                if (entityData.IsLocked && IsOnScreen(pos, entityData.Body.Velocity, entityData.Collider))
+                var pos = (Vector2)entityData.Transform.position;
+                
+                if (entityData.IsLocked && IsOnScreen(pos))
                 {
                     SetTeleportLock(entityData, false);
                     continue;
                 }
                 
-                if (!entityData.IsLocked && !IsOnScreen(pos, entityData.Body.Velocity, entityData.Collider))
+                if (!entityData.IsLocked && !IsOnScreen(pos))
                 {
                     TeleportToOtherSideOfTheScreen(entityData);
+                    SetTeleportLock(entityData, true);
+                    continue;
+                }
+                
+                //Safety net if the entity gets too far away of the screen
+                if (!IsInsideSafeZone(pos))
+                {
+                    //Set the movement direction to the center of the screen
+                    var screenCenter = (Vector2)_camera.ViewportToWorldPoint(Vector3.one * 0.5f);
+                    var currentVelocity = entityData.Body.Velocity;
+                    var fixedDirection = (screenCenter - pos).normalized;
+                    
+                    fixedDirection.x *=  Mathf.Max(1, Mathf.Abs(currentVelocity.x));
+                    fixedDirection.y *= Mathf.Max(1, Mathf.Abs(currentVelocity.y));
+                    
+                    entityData.Body.SetVelocity(fixedDirection);
                 }
             }
+        }
+
+        bool IsInsideSafeZone(Vector3 pos)
+        {
+            var bounds = _safeZone.bounds;
+            var min = bounds.min;
+            var max = bounds.max;
+
+            return pos.x >= min.x && pos.x <= max.x && pos.y >= min.y && pos.y <= max.y;
         }
 
         void SetTeleportLock(ScreenBorderEntityData entityData, bool isLocked)
@@ -79,10 +90,15 @@ namespace AngryAsteroids2D.Source.Gameplay.Level
             entityData.IsLocked = isLocked;
         }
         
+        /*
+         * This works because the camera is at the origin
+         * So, doing the *=-1 mirrors the position of the object.
+         *
+         * Notice that we're changing the worldPosition, not the viewport position.
+         */
         void TeleportToOtherSideOfTheScreen(ScreenBorderEntityData entityData)
         {
             Vector2 position = entityData.Transform.position;
-            
             Vector2 viewportPoint = _camera.WorldToViewportPoint(position);
             Vector2 newPosition = position;
 
@@ -95,87 +111,22 @@ namespace AngryAsteroids2D.Source.Gameplay.Level
             {
                 newPosition.y *= -1;
             }
-
-            // var centerDirection = (_screenCenterWorldPosition - newPosition).normalized;
-            // var dotProduct = Vector2.Dot(centerDirection, entity.Body.Velocity);
-            // if (IsNearCorner(newPosition, entity.Body.Velocity, entity.Collider) && dotProduct <= 0)
-            // {
-            //     newPosition.x *= -1;
-            // }
-            //
-            // newPosition.x = Mathf.Clamp(newPosition.x, )
-            
+ 
             entityData.IsLocked = true;
             entityData.Transform.position = newPosition;
         }
 
-        bool IsNearCorner(Vector3 worldPosition, Vector3 velocity, Collider2D collider)
-        {
-            Vector2 closestCornerViewportPosition = GetClosestCorner(worldPosition);
-            Vector2 closestCornerWorldPosition = _camera.ViewportToWorldPoint(closestCornerViewportPosition);
-            
-            Vector2 checkPoint = worldPosition + GetToleranceVector(worldPosition, velocity, collider);
-            var sqrDistance = (closestCornerWorldPosition - checkPoint).sqrMagnitude;
-            
-            return sqrDistance < (collider.bounds.size + collider.bounds.extents * 0.5f).sqrMagnitude;
-        }
-
-        Vector2 GetClosestCorner(Vector2 worldPosition)
-        {
-            Vector2 viewportPosition = _camera.WorldToViewportPoint(worldPosition);
-            
-            var minSqrDistance = float.MaxValue;
-            var corner = Vector3.zero;
-            
-            for (var i = 0; i < CORNERS.Length; i++)
-            {
-                var distance = (viewportPosition - CORNERS[i]).sqrMagnitude;
-                if (distance < minSqrDistance)
-                {
-                    minSqrDistance = distance;
-                    corner = CORNERS[i];
-                }
-            }
-            return corner;
-        }
-        
         /*
          * Viewport coordinates goes from 0,1 on x and y axis. I used that info to cheaply check
          * if the object is on the viewport
-         *
-         * Also, I've sum the velocity reversed vector to the position in order to add a little bit of tolerance to the check.
-         * This was decided after some gameplay tests and this tolerance gives a smoother sensation when teleporting
-         * entities
-         *
-         * DotProduct
-         * 1 = Same direction
-         * 0 = Perpendicular
-         * -1 = Opposite Direction
          */
-        
-        bool IsOnScreen(Vector3 tPosition, Vector3 velocity, Collider2D collider)
+        bool IsOnScreen(Vector3 tPosition)
         {
-            var toleranceVector = GetToleranceVector(tPosition, velocity, collider);
-            
-            var viewportPoint = _camera.WorldToViewportPoint(tPosition /*+ toleranceVector */);
+            var viewportPoint = _camera.WorldToViewportPoint(tPosition);
             var min = 0;
             var max = 1;
             
             return viewportPoint.x >= min && viewportPoint.x <= max && viewportPoint.y >= min && viewportPoint.y <= max;
-        }
-
-        Vector3 GetToleranceVector(Vector2 tPosition, Vector2 velocity, Collider2D collider)
-        {
-            var size = collider.bounds.size;
-            var normalizedVelocity = velocity.normalized;
-            
-            var screenCenterPoint  = _screenCenterWorldPosition;
-            var screenCenterVector = (screenCenterPoint - tPosition).normalized;
-
-            var alignment = Mathf.Min(1, Mathf.Sign(Vector2.Dot(screenCenterVector, normalizedVelocity)));
-            
-            var checkDirection = (normalizedVelocity * alignment).normalized;
-            return new Vector3(size.x * checkDirection.x, size.y * checkDirection.y);
         }
     }
 }

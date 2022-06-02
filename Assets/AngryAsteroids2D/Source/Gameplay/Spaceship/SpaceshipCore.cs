@@ -13,26 +13,38 @@ namespace AngryAsteroids2D.Source.Gameplay.Spaceship
         [SerializeField] SpaceshipConfig spaceshipConfig;
         [SerializeField] PhysicsConfig physicsConfig;
         [SerializeField] Collider2D collider;
-        [SerializeField] ContactFilter2D contactFilter2D;
         
         InputManager _inputManager;
         SpaceshipController _spaceshipController;
         PhysicsBody _body;
         
-        bool _isInitialized;
-
-        public PhysicsBody Body => _body;
-        public Collider2D Collider => collider;
+        bool _isEnabled;
         
-        public void Initialize(InputDeviceType inputDeviceType)
+        public void DoFirstTimeSetup(InputDeviceType inputDeviceType)
         {
             CreateSpaceshipComponents(inputDeviceType);
             ConnectInput();
+        }
+        
+        public void Enable()
+        {
             LinkSystems();
             
-            _isInitialized = true;
+            _body.SetVelocity(Vector3.zero);
+            gameObject.SetActive(true);
+            
+            _isEnabled = true;
         }
 
+        public void Disable()
+        {
+            UnlinkSystems();
+            
+            gameObject.SetActive(false);
+
+            _isEnabled = false;
+        }
+        
         void LinkSystems()
         {
             var entityId = GetInstanceID();
@@ -42,10 +54,6 @@ namespace AngryAsteroids2D.Source.Gameplay.Spaceship
 
             var physicsEntity = new PhysicsEntity(gameObject,_body);
             GameManager.GetInstance().GameSystems.PhysicsSystem.AddEntity(entityId, physicsEntity);
-
-            var collisionListenerEntity =
-                new CollisionListenerEntity(collider, contactFilter2D, OnAsteroidHitSpaceship);
-            GameManager.GetInstance().GameSystems.CollisionMessageSystem.AddEntity(entityId, collisionListenerEntity);
         }
         
         void UnlinkSystems()
@@ -54,7 +62,6 @@ namespace AngryAsteroids2D.Source.Gameplay.Spaceship
             
             GameManager.GetInstance().GameSystems.ScreenBorderPortalSystem.RemoveEntity(entityId);
             GameManager.GetInstance().GameSystems.PhysicsSystem.RemoveEntity(entityId);
-            GameManager.GetInstance().GameSystems.CollisionMessageSystem.RemoveEntity(entityId);
         }
         
         void CreateSpaceshipComponents(InputDeviceType inputDeviceType)
@@ -73,15 +80,9 @@ namespace AngryAsteroids2D.Source.Gameplay.Spaceship
             _inputManager.FireAction += _spaceshipController.FireAction;
         }
 
-        void OnAsteroidHitSpaceship(Collider2D self, Collider2D asteroid)
-        {
-            UnlinkSystems();
-            Destroy(gameObject);
-        }
-        
         void Update()
         {
-            if (!_isInitialized)
+            if (!_isEnabled)
             {
                 return;
             }

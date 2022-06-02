@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace AngryAsteroids2D.Source.Data.Level
@@ -16,7 +17,6 @@ namespace AngryAsteroids2D.Source.Data.Level
         Small = 1,
         Medium = 2,
         Big = 3,
-        Lava = 4
     }
     
     [Serializable]
@@ -25,19 +25,18 @@ namespace AngryAsteroids2D.Source.Data.Level
         public Vector3 SpawnPoint;
         public Vector3 MoveDirection;
         public AsteroidType AsteroidType;
-        
     }
 
     [Serializable]
     public struct WaveData
     {
         public WaveType WaveType;
-        public AsteroidSpawnData[] Asteroids;
+        public List<AsteroidSpawnData> Asteroids;
     }
     
     [CreateAssetMenu(menuName = "AngryAsteroids2D/Data/Level Config Asset")]
     public class LevelConfigAsset : ScriptableObject
     {
-        public WaveData[] LevelWaves;
+        public List<WaveData> LevelWaves;
     }
 }

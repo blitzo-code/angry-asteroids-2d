@@ -19,7 +19,7 @@ namespace AngryAsteroids2D.Source.Gameplay.Level
 
     public class ScreenLimitDestroySystem : GameSystem<ScreenLimitWatchEntity>
     {
-        Camera _camera;
+        readonly Camera _camera;
         
         public ScreenLimitDestroySystem(Camera camera, int maxEntities) : base(maxEntities)
         {

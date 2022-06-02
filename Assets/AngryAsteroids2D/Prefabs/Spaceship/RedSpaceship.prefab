@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5957804725752933265}
   - component: {fileID: 6602396249541831377}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 30
   m_Sprite: {fileID: 21300000, guid: 07c0df922ff8585499b15c684ad631ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2463426322930717385}
   - component: {fileID: 811280529102168249}
   - component: {fileID: 6836867072352233303}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RedSpaceship
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,22 +157,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spaceshipConfig:
-    PropulsionPower: 12
-    TurnSpeed: 0.8
-    FireRate: 3
+    PropulsionPower: 14
+    TurnSpeed: 300
+    ProjectileSpeed: 24
   physicsConfig: {fileID: 11400000, guid: edbd472b4fe8cef40be94430ccda5366, type: 2}
   collider: {fileID: 811280529102168249}
-  contactFilter2D:
-    useTriggers: 1
-    useLayerMask: 1
-    useDepth: 0
-    useOutsideDepth: 0
-    useNormalAngle: 0
-    useOutsideNormalAngle: 0
-    layerMask:
-      serializedVersion: 2
-      m_Bits: 64
-    minDepth: 0
-    maxDepth: 0
-    minNormalAngle: 0
-    maxNormalAngle: 0

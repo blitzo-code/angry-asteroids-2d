@@ -1,6 +1,3 @@
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using System.Collections;
 using AngryAsteroids2D.Source.Utils;
 using UnityEngine;
@@ -10,28 +7,21 @@ namespace AngryAsteroids2D.Source.Core
 {
     public class AppDelegate : MonoBehaviour
     {
-        static AppDelegate INSTANCE;
+        bool _isLoading;
         
-        void Awake()
+        void Update()
         {
-            if (INSTANCE)
+            if (UnityEngine.Input.GetKeyDown(KeyCode.Return) && !_isLoading)
             {
-                HierarchyUtils.LogDuplicatedSingletonError(GetType().Name, gameObject);
-                return;
+                StartCoroutine(LoadGameplayScene());
             }
-            INSTANCE = this;
-            
-            Init();
-        }
-
-        void Init()
-        {
-            StartCoroutine(LoadGameplayScene());
         }
 
         IEnumerator LoadGameplayScene()
         {
-            var asyncLoadOperation = SceneManager.LoadSceneAsync("GameplayScene", LoadSceneMode.Additive);
+            _isLoading = true;
+            
+            var asyncLoadOperation = SceneManager.LoadSceneAsync("GameplayScene");
             while (!asyncLoadOperation.isDone)
             {
                 yield return null;

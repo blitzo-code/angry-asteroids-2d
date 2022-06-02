@@ -15,12 +15,89 @@ MonoBehaviour:
   LevelWaves:
   - WaveType: 0
     Asteroids:
-    - SpawnPoint: {x: -13.3, y: 15.38, z: 0}
-      MoveDirection: {x: 1, y: -1, z: 0}
+    - SpawnPoint: {x: 30.041336, y: -10.111958, z: 0}
+      MoveDirection: {x: -1, y: 0, z: 0}
       AsteroidType: 3
-    - SpawnPoint: {x: 0.02, y: 15.38, z: 0}
-      MoveDirection: {x: 1, y: -1, z: 0}
+    - SpawnPoint: {x: -30.04134, y: 10.013775, z: 0}
+      MoveDirection: {x: 1, y: 0, z: 0}
       AsteroidType: 3
-    - SpawnPoint: {x: 17.36, y: 15.38, z: 0}
-      MoveDirection: {x: -1, y: -1, z: 0}
+  - WaveType: 0
+    Asteroids:
+    - SpawnPoint: {x: 29.84499, y: 9.817428, z: 0}
+      MoveDirection: {x: -1, y: 0, z: 0}
       AsteroidType: 3
+    - SpawnPoint: {x: -30.04134, y: -10.308305, z: 0}
+      MoveDirection: {x: 1, y: 0, z: 0}
+      AsteroidType: 3
+  - WaveType: 0
+    Asteroids:
+    - SpawnPoint: {x: -19.929382, y: 16.395105, z: 0}
+      MoveDirection: {x: 0, y: -1, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: 20.125736, y: -16.493284, z: 0}
+      MoveDirection: {x: 0, y: 1, z: 0}
+      AsteroidType: 3
+  - WaveType: 0
+    Asteroids:
+    - SpawnPoint: {x: 20.22391, y: 16.100586, z: 0}
+      MoveDirection: {x: 0, y: -1, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: -19.83121, y: -16.787804, z: 0}
+      MoveDirection: {x: 0, y: 1, z: 0}
+      AsteroidType: 3
+  - WaveType: 0
+    Asteroids:
+    - SpawnPoint: {x: -23.561834, y: -17.278675, z: 0}
+      MoveDirection: {x: 0.6490498, y: 0.7607459, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: 22.67827, y: -17.278675, z: 0}
+      MoveDirection: {x: -0.7071068, y: 0.70710665, z: 0}
+      AsteroidType: 3
+  - WaveType: 1
+    Asteroids:
+    - SpawnPoint: {x: -23.561834, y: -17.278675, z: 0}
+      MoveDirection: {x: 0.6490498, y: 0.7607459, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: 22.67827, y: -17.278675, z: 0}
+      MoveDirection: {x: -0.7071068, y: 0.70710665, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: -29.943163, y: 7.559427, z: 0}
+      MoveDirection: {x: 1, y: 0, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: 29.844992, y: 7.559427, z: 0}
+      MoveDirection: {x: -1, y: 0, z: 0}
+      AsteroidType: 3
+  - WaveType: 1
+    Asteroids:
+    - SpawnPoint: {x: -0.098171234, y: 16.591465, z: 0}
+      MoveDirection: {x: -0.00000008791685, y: -1, z: 0}
+      AsteroidType: 3
+    - SpawnPoint: {x: -30.434032, y: 5.4977684, z: 0}
+      MoveDirection: {x: 1, y: 0, z: 0}
+      AsteroidType: 2
+    - SpawnPoint: {x: -30.434032, y: -10.111946, z: 0}
+      MoveDirection: {x: 1, y: 0, z: 0}
+      AsteroidType: 2
+    - SpawnPoint: {x: 30.139519, y: -10.111946, z: 0}
+      MoveDirection: {x: -1, y: 0, z: 0}
+      AsteroidType: 2
+    - SpawnPoint: {x: 30.139519, y: 7.36308, z: 0}
+      MoveDirection: {x: -1, y: 0, z: 0}
+      AsteroidType: 2
+  - WaveType: 1
+    Asteroids:
+    - SpawnPoint: {x: -29.844992, y: 9.915606, z: 0}
+      MoveDirection: {x: 1, y: 0, z: 0}
+      AsteroidType: 2
+    - SpawnPoint: {x: -29.844992, y: 0.09817505, z: 0}
+      MoveDirection: {x: 1, y: -0.00000004321337, z: 0}
+      AsteroidType: 2
+    - SpawnPoint: {x: -29.844992, y: -10.111953, z: 0}
+      MoveDirection: {x: 1, y: 0, z: 0}
+      AsteroidType: 2
+    - SpawnPoint: {x: 30.041334, y: -4.9087143, z: 0}
+      MoveDirection: {x: -1, y: 0, z: 0}
+      AsteroidType: 2
+    - SpawnPoint: {x: 30.041334, y: 6.0868073, z: 0}
+      MoveDirection: {x: -1, y: 0, z: 0}
+      AsteroidType: 2

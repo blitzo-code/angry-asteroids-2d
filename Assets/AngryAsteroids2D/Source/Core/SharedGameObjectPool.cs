@@ -29,7 +29,6 @@ namespace AngryAsteroids2D.Source.Core
             {
                 if (_pool[i].Id.Equals(referenceId) && !_pool[i].GameObject.activeSelf)
                 {
-                    _pool[i].GameObject.SetActive(true);
                     return _pool[i].GameObject;
                 }
             }
@@ -46,7 +45,8 @@ namespace AngryAsteroids2D.Source.Core
             for (var i = startingIndex; i < _pool.Length; i++)
             {
                 _pool[i].Id = referenceId;
-                _pool[i].GameObject = GameObject.Instantiate(gameObject);
+                _pool[i].GameObject = GameObject.Instantiate(gameObject, Vector3.one * 1000, gameObject.transform.rotation);
+                _pool[i].GameObject.SetActive(false);
                 _poolCount++;
 
                 return _pool[i].GameObject;
@@ -66,7 +66,7 @@ namespace AngryAsteroids2D.Source.Core
             foundObject.SetActive(false);
         }
 
-        public GameObject FindGameObjectById(int gameObjectId)
+        GameObject FindGameObjectById(int gameObjectId)
         {
             for (var i = 0; i < _poolCount; i++)
             {

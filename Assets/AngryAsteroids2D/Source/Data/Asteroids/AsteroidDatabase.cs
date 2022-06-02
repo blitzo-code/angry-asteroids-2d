@@ -13,9 +13,7 @@ namespace AngryAsteroids2D.Source.Data.Asteroids
         public AsteroidType AsteroidType;
         public GameObject Prefab;
         public PhysicsConfig PhysicsConfig;
-        public GameObject DestructionVFX;
     }
-    
     
     [CreateAssetMenu(menuName = "AngryAsteroids2D/Data/Asteroid Prefab Database")]
     public class AsteroidDatabase : ScriptableObject

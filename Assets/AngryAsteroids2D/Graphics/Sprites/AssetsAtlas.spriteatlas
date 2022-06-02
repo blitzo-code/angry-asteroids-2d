@@ -34,24 +34,34 @@ SpriteAtlas:
     packables:
     - {fileID: 102900000, guid: 7d01516bfd817a042866d3b4ac2cbe55, type: 3}
     - {fileID: 102900000, guid: 2999efe74d409a848b67e052225fab7f, type: 3}
+    - {fileID: 102900000, guid: e21f93cf75e27b6468720fa8d82ea01f, type: 3}
+    - {fileID: 102900000, guid: 4417230eee88e3b41b32d967daea39d4, type: 3}
     bindAsDefault: 1
     isAtlasV2: 0
     cachedData: {fileID: 0}
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
   - {fileID: 21300000, guid: c638db30218bc8b4184634fccb55316f, type: 3}
+  - {fileID: 21300000, guid: bf746c9185fff114a92ee5557b25dbbb, type: 3}
+  - {fileID: 21300000, guid: 9811066211956be41a4d94e6d357daa8, type: 3}
   - {fileID: 21300000, guid: 07c0df922ff8585499b15c684ad631ee, type: 3}
+  - {fileID: 21300000, guid: 9f74a8e444a3edc4886dfb09621f492a, type: 3}
   - {fileID: 21300000, guid: 05d9dde56ebea03488bb5e7ca96016ad, type: 3}
   - {fileID: 21300000, guid: e0d325d6d9c90a940aaa586e50dd9a84, type: 3}
   - {fileID: 21300000, guid: 5e0c2fdb388b2f14a9d95e257b903461, type: 3}
+  - {fileID: 21300000, guid: a263fd4c5dd71094e8db5ed2a875de44, type: 3}
   - {fileID: 21300000, guid: f75f3bcc9943e67499ac3624048a592c, type: 3}
   - {fileID: 21300000, guid: be3d8a4d1ea00684898b2093839ce66c, type: 3}
   m_PackedSpriteNamesToIndex:
   - lava-asteroid
+  - pig-spaceship
+  - background
   - spaceShips_008
+  - Bird
   - small-regular-asteroid
   - medium-regular-asteroid
   - lava-projectile
+  - main-screen
   - spaceMissile
   - big-regular-asteroid
   m_RenderDataMap: {}

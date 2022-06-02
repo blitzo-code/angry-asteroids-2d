@@ -4,8 +4,6 @@ using UnityEngine;
 
 namespace AngryAsteroids2D.Source.Physics
 {
-    
-    
     public class PhysicsBody
     {
         readonly Transform _transform;

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fda9a7cf3c8f1f4a9577c3effc32862, type: 3}
+  m_Name: UFODataAsset
+  m_EditorClassIdentifier: 
+  UFOPrefab: {fileID: 5486746687305734642, guid: 8ddc3515fe37a9e41a9508d5429da7fe, type: 3}
+  ProjectileSpeed: 18
+  MovementSpeed: 4
+  PossiblePaths:
+  - Waypoints:
+    - {x: 36.11, y: 9.89, z: 0}
+    - {x: 9.95, y: 9.89, z: 0}
+    - {x: -20, y: -9.8, z: 0}
+    - {x: -39.97, y: -9.8, z: 0}
+  - Waypoints:
+    - {x: -40.06, y: 9.98, z: 0}
+    - {x: -14.92, y: 9.98, z: 0}
+    - {x: 14.66, y: -9.98, z: 0}
+    - {x: 40.17, y: -9.98, z: 0}

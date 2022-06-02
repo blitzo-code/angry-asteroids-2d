@@ -30,12 +30,12 @@ namespace AngryAsteroids2D.Source.Input
             float turnDirection = 0;
             if (UnityEngine.Input.GetKey(POSITIVE_TURN))
             {
-                turnDirection++;
+                turnDirection = 1;
             }
 
             if (UnityEngine.Input.GetKey(NEGATIVE_TURN))
             {
-                turnDirection--;
+                turnDirection = -1;
             }
             
             return turnDirection;

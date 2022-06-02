@@ -14,7 +14,7 @@ namespace AngryAsteroids2D.Source.Core
         readonly Entity<T>[] _entities;
         int _entityCount;
         
-        public GameSystem(int maxEntities)
+        protected GameSystem(int maxEntities)
         {
             _entities = new Entity<T>[maxEntities];
         }

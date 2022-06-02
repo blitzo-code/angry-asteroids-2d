@@ -40,7 +40,7 @@ namespace AngryAsteroids2D.Source.Gameplay.Projectile
             _projectileData = projectileData;
         }
 
-        public Projectile SpawnProjectile(ProjectileType projectileType, Vector3 position, Quaternion rotation)
+        public Projectile SpawnProjectile(ProjectileType projectileType, Vector3 position, Quaternion rotation, ContactFilter2D collisionFilter)
         {
             var projectileData = _projectileData[projectileType];
             
@@ -48,7 +48,7 @@ namespace AngryAsteroids2D.Source.Gameplay.Projectile
             gameObject.transform.position = position;
             gameObject.transform.rotation = rotation;
             
-            var projectile = new Projectile(projectileType, gameObject, projectileData.PhysicsConfig, projectileData.ContactFilter2D);
+            var projectile = new Projectile(projectileType, gameObject, projectileData.PhysicsConfig, collisionFilter);
             return projectile;
         }
 
